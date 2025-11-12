@@ -57,6 +57,12 @@
       user-select: none;
       text-decoration: none;
       color: var(--white);
+      transition: transform .2s cubic-bezier(0.4, 0, 0.2, 1), opacity .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .brand:active {
+      transform: scale(0.96);
+      opacity: 0.85;
     }
     .logo {
       width: 36px;
@@ -66,6 +72,10 @@
       display: grid;
       place-items: center;
       box-shadow: 0 6px 24px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+      transition: transform .2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .brand:active .logo {
+      transform: scale(0.95);
     }
     .logo svg { opacity: .9; }
     .title {
@@ -75,24 +85,38 @@
     }
     .search-bar {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
+      grid-template-columns: 1fr auto auto;
+      gap: 8px;
       width: 100%;
       background: rgba(255,255,255,.04);
       padding: 10px;
       border-radius: 12px;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+      position: relative;
     }
     .search-input {
       width: 100%;
+      min-width: 0;
       background: rgba(0,0,0,.15);
       border: 1px solid rgba(255,255,255,.14);
       color: var(--white);
       padding: 14px 14px;
       border-radius: 10px;
       outline: none;
+      font-size: 16px;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color .2s ease, background-color .2s ease, transform .15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .search-input:focus {
+      border-color: rgba(255,255,255,.3);
+      background: rgba(0,0,0,.2);
+      transform: scale(1.01);
     }
     .search-input::placeholder { color: var(--muted); }
+    @media (max-width: 480px) {
+      .search-input::placeholder { font-size: 14px; }
+    }
     .search-button {
       background: var(--white);
       color: var(--black);
@@ -101,10 +125,15 @@
       border-radius: 10px;
       cursor: pointer;
       font-weight: 700;
-      transition: transform .06s ease, box-shadow .15s ease;
+      transition: transform .15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .15s ease, opacity .15s ease;
       box-shadow: 0 6px 20px rgba(255,255,255,.08);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
-    .search-button:active { transform: translateY(1px); }
+    .search-button:active { 
+      transform: scale(0.96) translateY(1px);
+      opacity: 0.9;
+    }
     .search-button:focus-visible, .search-input:focus-visible {
       outline: 2px solid var(--white);
       outline-offset: 2px;
@@ -113,14 +142,23 @@
       background: rgba(255,255,255,.12);
       border: 1px solid rgba(255,255,255,.16);
       color: var(--white);
-      padding: 0 10px;
+      padding: 0;
+      min-width: 44px;
+      height: 44px;
       border-radius: 10px;
       display: grid;
       place-items: center;
       cursor: pointer;
-      transition: background .15s ease;
+      transition: background .15s ease, transform .15s cubic-bezier(0.4, 0, 0.2, 1), opacity .15s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .icon-btn:hover { background: rgba(255,255,255,.16); }
+    .icon-btn:active { 
+      background: rgba(255,255,255,.2);
+      transform: scale(0.92);
+      opacity: 0.85;
+    }
     .icon { width: 18px; height: 18px; opacity: .9; }
     /* Suggestions dropdown */
     .suggestions {
@@ -129,24 +167,38 @@
       left: 0;
       right: 0;
       background: rgba(13,46,79,.98);
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,.12);
       border-radius: 12px;
       box-shadow: 0 16px 40px rgba(0,0,0,.5);
       overflow: hidden;
-      z-index: 30;
+      overflow-y: auto;
+      max-height: min(400px, calc(100vh - 200px));
+      z-index: 100;
+      -webkit-overflow-scrolling: touch;
     }
     .suggestion-item {
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      padding: 10px 12px;
+      padding: 12px;
+      min-height: 44px;
       cursor: pointer;
       border-top: 1px solid rgba(255,255,255,.06);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      transition: background .2s ease, transform .15s cubic-bezier(0.4, 0, 0.2, 1), opacity .15s ease;
+      position: relative;
     }
     .suggestion-item:first-child { border-top: 0; }
     .suggestion-item[aria-selected="true"],
     .suggestion-item:hover {
       background: rgba(255,255,255,.06);
+    }
+    .suggestion-item:active {
+      background: rgba(255,255,255,.1);
+      transform: scale(0.98);
+      opacity: 0.9;
     }
     .s-name { font-weight: 700; color: var(--white); }
     .s-meta { color: var(--muted); font-size: 12px; }
@@ -177,9 +229,13 @@
       border-radius: 16px;
       padding: clamp(14px, 2.8vw, 18px);
       box-shadow: 0 14px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
-      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+      transition: transform .2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .2s ease, background-color .2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
     .card:hover { transform: translateY(-2px); box-shadow: 0 20px 50px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.08); }
+    .card:active {
+      transform: scale(0.99) translateY(-1px);
+    }
     .card h2 {
       margin: 0 0 8px 0;
       font-size: clamp(16px, 2vw, 18px);
@@ -203,7 +259,19 @@
       font-weight: 900;
       letter-spacing: -1px;
     }
-    .current-icon { width: clamp(42px, 7vw, 56px); height: clamp(42px, 7vw, 56px); }
+    .current-icon { 
+      width: clamp(42px, 7vw, 56px); 
+      height: clamp(42px, 7vw, 56px);
+      transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .current-icon.pulse {
+      animation: iconPulse 0.6s ease-out;
+    }
+    @keyframes iconPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -213,6 +281,12 @@
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.12);
       font-size: 13px;
+      transition: transform .15s cubic-bezier(0.4, 0, 0.2, 1), opacity .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .badge:active {
+      transform: scale(0.95);
+      opacity: 0.8;
     }
     .chips {
       display: flex;
@@ -237,19 +311,43 @@
       display: grid;
       grid-template-rows: auto auto auto;
       gap: 6px;
-      transition: transform .2s ease, box-shadow .2s ease;
+      transition: transform .2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .2s ease, opacity .15s ease;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .forecast .day:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.35); }
+    .forecast .day:active {
+      transform: scale(0.95) translateY(-1px);
+      opacity: 0.85;
+    }
     .day .hi { color: var(--white); font-weight: 700; }
     .day .lo { color: var(--muted); }
     footer {
-      margin-top: 24px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .about {
       color: var(--muted);
-      font-size: 13px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about h3 {
+      margin: 0 0 12px 0;
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .about p {
+      margin: 0;
+    }
+    .about strong {
+      color: var(--white);
+      font-weight: 600;
     }
     .waves {
       position: absolute;
@@ -307,11 +405,31 @@
       margin-top: 8px;
     }
     /* Mobile-first spacing tweaks */
-    @media (max-width: 420px) {
+    @media (max-width: 480px) {
       .row { gap: 8px 10px; }
       .badge { font-size: 12px; padding: 7px 9px; }
-      .search-bar { grid-template-columns: 1fr auto; gap: 8px; }
-      .search-button { padding: 12px 14px; }
+      .search-bar { 
+        grid-template-columns: 1fr auto auto; 
+        gap: 6px; 
+        padding: 8px;
+      }
+      .search-button { 
+        padding: 12px 10px; 
+        font-size: 13px;
+        white-space: nowrap;
+      }
+      .search-input {
+        padding: 12px 10px;
+        font-size: 16px;
+      }
+      .icon-btn {
+        min-width: 40px;
+        height: 40px;
+      }
+      header {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
     }
   </style>
 </head>
@@ -340,9 +458,9 @@
         </span>
         <span class="title">Ocean</span>
       </a>
-      <form id="searchForm" class="search-bar" role="search" aria-label="Search city for weather" style="grid-template-columns: 1fr auto auto;">
+      <form id="searchForm" class="search-bar" role="search" aria-label="Search city for weather">
         <label class="sr-only" for="q">Search city</label>
-        <input id="q" class="search-input" name="q" placeholder="Search city (e.g., London, Chennai)" autocomplete="off" inputmode="search" />
+        <input id="q" class="search-input" name="q" placeholder="Search" autocomplete="off" inputmode="search" />
         <button type="submit" class="search-button">Get Weather</button>
         <button type="button" id="locBtn" class="icon-btn" title="Use my location" aria-label="Use my location">
           <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -384,8 +502,10 @@
     </div>
 
     <footer>
-      <span>Founder: <strong>Sinthujan Baskaran</strong></span>
-      <span>Data: Open‑Meteo (Open Source API)</span>
+      <div class="about">
+        <h3>About</h3>
+        <p>This weather app was created by <strong>Sinthujan Baskaran</strong>. It helps you check the latest weather updates easily and quickly. My goal is to make it simple and useful for everyone.</p>
+      </div>
     </footer>
   </div>
 
@@ -613,6 +733,7 @@
         name: r.name,
         country: r.country,
         admin1: r.admin1,
+        admin2: r.admin2,
         latitude: r.latitude,
         longitude: r.longitude,
         timezone: r.timezone
@@ -620,6 +741,35 @@
     }
 
     async function geocodeMany(query) {
+      // Popular Jaffna locations to boost (beaches, cities, villages)
+      const jaffnaLocations = [
+        "Jaffna", "Point Pedro", "Chavakachcheri", "Valvettithurai", "Karainagar",
+        "Nallur", "Kopay", "Tellippalai", "Uduvil", "Chankanai",
+        "Casuarina Beach", "Passikudah", "Kankesanthurai", "Mannar", "Delft Island"
+      ];
+      const isJaffnaQuery = jaffnaLocations.some(loc => 
+        query.toLowerCase().includes(loc.toLowerCase()) || 
+        loc.toLowerCase().includes(query.toLowerCase())
+      );
+      
+      // Jaffna/Northern Province specific search (highest priority)
+      const jaffnaSearch = isJaffnaQuery ? await (async () => {
+        const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
+        url.searchParams.set("name", query);
+        url.searchParams.set("count", "15");
+        url.searchParams.set("language", "en");
+        url.searchParams.set("format", "json");
+        url.searchParams.set("country", "LK");
+        const res = await fetch(url.toString());
+        if (!res.ok) return [];
+        const data = await res.json();
+        return (data.results || []).map(r => ({
+          name: r.name, country: r.country, admin1: r.admin1, admin2: r.admin2,
+          latitude: r.latitude, longitude: r.longitude,
+          timezone: r.timezone, population: r.population
+        }));
+      })() : [];
+      
       // General suggestions
       const general = await (async () => {
         const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
@@ -631,11 +781,12 @@
         if (!res.ok) return [];
         const data = await res.json();
         return (data.results || []).map(r => ({
-          name: r.name, country: r.country, admin1: r.admin1,
+          name: r.name, country: r.country, admin1: r.admin1, admin2: r.admin2,
           latitude: r.latitude, longitude: r.longitude,
           timezone: r.timezone, population: r.population
         }));
       })();
+      
       // Sri Lanka targeted suggestions
       const sriLanka = await (async () => {
         const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
@@ -648,26 +799,48 @@
         if (!res.ok) return [];
         const data = await res.json();
         return (data.results || []).map(r => ({
-          name: r.name, country: r.country, admin1: r.admin1,
+          name: r.name, country: r.country, admin1: r.admin1, admin2: r.admin2,
           latitude: r.latitude, longitude: r.longitude,
           timezone: r.timezone, population: r.population
         }));
       })();
-      const merged = [...general, ...sriLanka];
+      
+      const merged = [...jaffnaSearch, ...general, ...sriLanka];
       const seen = new Set();
       const unique = merged.filter(r => {
         const key = [r.name, r.admin1, r.country].join("|");
         if (seen.has(key)) return false; seen.add(key); return true;
       });
-      const northern = unique.filter(r => (r.admin1 || "").toLowerCase().includes("northern"));
-      // Treat missing population or very small population as minor places
+      
+      // Prioritize Jaffna district and Northern Province
+      const jaffnaDistrict = unique.filter(r => 
+        (r.admin2 && r.admin2.toLowerCase().includes("jaffna")) ||
+        (r.name && jaffnaLocations.some(loc => r.name.toLowerCase().includes(loc.toLowerCase())))
+      );
+      const northern = unique.filter(r => 
+        (r.admin1 || "").toLowerCase().includes("northern") && !jaffnaDistrict.includes(r)
+      );
+      
+      // Small places in Northern Province (beaches, villages)
+      const minorInNorth = unique.filter(r =>
+        (r.admin1 && r.admin1.toLowerCase().includes("northern")) &&
+        (r.population == null || r.population < 50000) &&
+        !jaffnaDistrict.includes(r) && !northern.includes(r)
+      );
+      
+      // Other minor places in Sri Lanka
       const minorInLK = unique.filter(r =>
         r.country === "Sri Lanka" &&
         (r.population == null || r.population < 120000) &&
-        !northern.includes(r)
+        !jaffnaDistrict.includes(r) && !northern.includes(r) && !minorInNorth.includes(r)
       );
-      const others = unique.filter(r => !northern.includes(r) && !minorInLK.includes(r));
-      return [...northern, ...minorInLK, ...others].slice(0, 10);
+      
+      const others = unique.filter(r => 
+        !jaffnaDistrict.includes(r) && !northern.includes(r) && 
+        !minorInNorth.includes(r) && !minorInLK.includes(r)
+      );
+      
+      return [...jaffnaDistrict, ...northern, ...minorInNorth, ...minorInLK, ...others].slice(0, 12);
     }
 
     async function getWeather(lat, lon, timezone) {
@@ -698,6 +871,13 @@
       requestAnimationFrame(animateTemp);
       const label = WEATHER_CODES[c.weather_code] || "—";
       elements.summary.innerHTML = iconSvg(iconForCode(c.weather_code)) + "<span>" + label + "</span>";
+      // Trigger pulse animation on icon update
+      const icon = elements.summary.querySelector(".current-icon");
+      if (icon) {
+        icon.classList.remove("pulse");
+        setTimeout(() => icon.classList.add("pulse"), 10);
+        setTimeout(() => icon.classList.remove("pulse"), 600);
+      }
       elements.feelsLike.textContent = "Feels like " + Math.round(c.apparent_temperature) + "°";
       elements.wind.textContent = "Wind " + Math.round(c.wind_speed_10m) + " m/s";
       elements.humidity.textContent = "Humidity " + Math.round(c.relative_humidity_2m) + "%";
@@ -735,7 +915,8 @@
         <div class="badge"><strong>Sunset</strong> ${sunset ? new Date(sunset).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"}) : "—"}</div>
         <div class="badge"><strong>UV Max</strong> ${uv ?? "—"}</div>
         <div class="badge"><strong>Rain chance</strong> ${typeof pop === "number" ? pop + "%" : "—"}</div>
-        ${place.admin1 && place.admin1.toLowerCase().includes("northern") ? '<div class="badge"><strong>Region</strong> Northern Province</div>' : ""}
+        ${place.admin2 && place.admin2.toLowerCase().includes("jaffna") ? '<div class="badge"><strong>📍 Region</strong> Jaffna District, Northern Province</div>' : 
+          place.admin1 && place.admin1.toLowerCase().includes("northern") ? '<div class="badge"><strong>📍 Region</strong> Northern Province</div>' : ""}
       `;
     }
 
@@ -787,10 +968,19 @@
     }
     function showSuggestions(items) {
       if (!items || items.length === 0) { hideSuggestions(); return; }
+      const jaffnaLocations = ["Jaffna", "Point Pedro", "Chavakachcheri", "Valvettithurai", "Karainagar", "Nallur", "Kopay", "Tellippalai", "Uduvil", "Chankanai", "Casuarina", "Passikudah", "Kankesanthurai", "Mannar", "Delft"];
       elements.suggestions.innerHTML = items.map((r, i) => {
-        const isNorthern = r.admin1 && r.admin1.toLowerCase().includes("northern");
-        const minor = r.population && r.population < 100000 ? "Minor place" : "";
+        const isJaffna = (r.admin2 && r.admin2.toLowerCase().includes("jaffna")) ||
+                        (r.name && jaffnaLocations.some(loc => r.name.toLowerCase().includes(loc.toLowerCase())));
+        const isNorthern = r.admin1 && r.admin1.toLowerCase().includes("northern") && !isJaffna;
+        const isBeach = r.name && (r.name.toLowerCase().includes("beach") || r.name.toLowerCase().includes("casuarina"));
+        const isVillage = r.population && r.population < 50000 && (isJaffna || isNorthern);
+        const minor = r.population && r.population < 100000 && !isJaffna && !isNorthern ? "Minor place" : "";
         const meta = [r.admin1, r.country].filter(Boolean).join(", ");
+        let badge = "";
+        if (isJaffna) badge = isBeach ? "🏖️ Jaffna Beach" : "📍 Jaffna District";
+        else if (isNorthern) badge = isVillage ? "🏘️ Northern Village" : "📍 Northern Province";
+        else if (minor) badge = minor;
         return `
           <div class="suggestion-item" role="option" data-index="${i}" data-name="${r.name}" data-lat="${r.latitude}" data-lon="${r.longitude}" data-tz="${r.timezone}" aria-selected="${i===0?'true':'false'}">
             <div style="display:flex;gap:10px;align-items:center">
@@ -800,7 +990,7 @@
                 <div class="s-meta">${meta}</div>
               </div>
             </div>
-            <div class="s-badge">${isNorthern ? "Northern Province" : (minor || " ")}</div>
+            <div class="s-badge">${badge || " "}</div>
           </div>
         `;
       }).join("");
@@ -867,14 +1057,21 @@
         hideSuggestions();
       }
     });
-    elements.suggestions.addEventListener("mousedown", (e) => {
+    function handleSuggestionSelect(e) {
       const item = e.target.closest(".suggestion-item");
       if (!item) return;
+      e.preventDefault();
+      e.stopPropagation();
       Array.from(elements.suggestions.children).forEach((n) => n.setAttribute("aria-selected", "false"));
       item.setAttribute("aria-selected", "true");
       chooseActiveSuggestion();
-    });
+    }
+    elements.suggestions.addEventListener("mousedown", handleSuggestionSelect);
+    elements.suggestions.addEventListener("touchstart", handleSuggestionSelect, { passive: false });
     document.addEventListener("click", (e) => {
+      if (!elements.form.contains(e.target) && !elements.suggestions.contains(e.target)) hideSuggestions();
+    });
+    document.addEventListener("touchend", (e) => {
       if (!elements.form.contains(e.target) && !elements.suggestions.contains(e.target)) hideSuggestions();
     });
 
@@ -911,40 +1108,74 @@
 
     // Use my location button
     async function useMyLocation() {
-      if (!("geolocation" in navigator)) { setError("Geolocation not supported."); return; }
+      if (!("geolocation" in navigator)) { 
+        setError("Geolocation not supported."); 
+        return; 
+      }
       setLoading(true);
-      navigator.geolocation.getCurrentPosition(async (pos) => {
-        try {
-          const { latitude, longitude } = pos.coords;
-          const rev = new URL("https://geocoding-api.open-meteo.com/v1/reverse");
-          rev.searchParams.set("latitude", String(latitude));
-          rev.searchParams.set("longitude", String(longitude));
-          rev.searchParams.set("count", "1");
-          rev.searchParams.set("language", "en");
-          const res = await fetch(rev.toString());
-          const data = await res.json();
-          const place = data.results && data.results[0] ? {
-            name: data.results[0].name,
-            country: data.results[0].country,
-            admin1: data.results[0].admin1,
-            latitude,
-            longitude,
-            timezone: data.results[0].timezone
-          } : { name: "Your location", latitude, longitude, timezone: "auto" };
-          const wx = await getWeather(place.latitude, place.longitude, place.timezone);
-          renderCurrent(place, wx);
-          renderForecast(wx.daily);
-          renderInsights(place, wx.daily);
-          saveRecent(place);
-        } catch (e) {
-          setError("Could not load your location weather.");
-        } finally {
+      setError("");
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          try {
+            const { latitude, longitude } = pos.coords;
+            let place = { name: "Your location", latitude, longitude, timezone: "auto" };
+            
+            // Try reverse geocoding, but don't fail if it doesn't work
+            try {
+              const rev = new URL("https://geocoding-api.open-meteo.com/v1/reverse");
+              rev.searchParams.set("latitude", String(latitude));
+              rev.searchParams.set("longitude", String(longitude));
+              rev.searchParams.set("count", "1");
+              rev.searchParams.set("language", "en");
+              const res = await fetch(rev.toString());
+              if (res.ok) {
+                const data = await res.json();
+                if (data.results && data.results.length > 0 && data.results[0]) {
+                  place = {
+                    name: data.results[0].name,
+                    country: data.results[0].country,
+                    admin1: data.results[0].admin1,
+                    latitude,
+                    longitude,
+                    timezone: data.results[0].timezone || "auto"
+                  };
+                }
+              }
+            } catch (geoErr) {
+              // Continue with coordinates even if reverse geocoding fails
+              console.log("Reverse geocoding failed, using coordinates directly");
+            }
+            
+            // Get weather data
+            const wx = await getWeather(place.latitude, place.longitude, place.timezone);
+            if (!wx || !wx.current) {
+              throw new Error("Weather data invalid");
+            }
+            
+            renderCurrent(place, wx);
+            renderForecast(wx.daily);
+            if (typeof renderInsights === 'function') {
+              renderInsights(place, wx.daily);
+            }
+            saveRecent(place);
+            setLoading(false);
+          } catch (e) {
+            console.error("Location button error:", e);
+            setError("Could not load weather for your location. Please try again.");
+            setLoading(false);
+          }
+        },
+        (err) => {
+          console.error("Location permission error:", err);
+          setError("Location permission denied or unavailable. Please allow location access and try again.");
           setLoading(false);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 8000,
+          maximumAge: 300000 // 5 minutes
         }
-      }, () => {
-        setError("Location permission denied.");
-        setLoading(false);
-      });
+      );
     }
     elements.locBtn.addEventListener("click", useMyLocation);
 
@@ -977,35 +1208,79 @@
       searchCity(query);
     });
 
+    // Automatically request location on page load
     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(async (pos) => {
-        try {
-          const { latitude, longitude } = pos.coords;
-          const rev = new URL("https://geocoding-api.open-meteo.com/v1/reverse");
-          rev.searchParams.set("latitude", String(latitude));
-          rev.searchParams.set("longitude", String(longitude));
-          rev.searchParams.set("count", "1");
-          rev.searchParams.set("language", "en");
-          const res = await fetch(rev.toString());
-          const data = await res.json();
-          const place = data.results && data.results[0] ? {
-            name: data.results[0].name,
-            country: data.results[0].country,
-            admin1: data.results[0].admin1,
-            latitude,
-            longitude,
-            timezone: data.results[0].timezone
-          } : { name: "Your location", latitude, longitude, timezone: "auto" };
-          const wx = await getWeather(place.latitude, place.longitude, place.timezone);
-          renderCurrent(place, wx);
-          renderForecast(wx.daily);
-        } catch {
-          // ignore geolocation failures
-        }
-      });
+      // Wait a tiny bit to ensure DOM is ready
+      setTimeout(() => {
+        setLoading(true);
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            try {
+              setError("");
+              const { latitude, longitude } = pos.coords;
+              let place = { name: "Your location", latitude, longitude, timezone: "auto" };
+              
+              // Try reverse geocoding, but don't fail if it doesn't work
+              try {
+                const rev = new URL("https://geocoding-api.open-meteo.com/v1/reverse");
+                rev.searchParams.set("latitude", String(latitude));
+                rev.searchParams.set("longitude", String(longitude));
+                rev.searchParams.set("count", "1");
+                rev.searchParams.set("language", "en");
+                const res = await fetch(rev.toString());
+                if (res.ok) {
+                  const data = await res.json();
+                  if (data.results && data.results.length > 0 && data.results[0]) {
+                    place = {
+                      name: data.results[0].name,
+                      country: data.results[0].country,
+                      admin1: data.results[0].admin1,
+                      latitude,
+                      longitude,
+                      timezone: data.results[0].timezone || "auto"
+                    };
+                  }
+                }
+              } catch (geoErr) {
+                // Continue with coordinates even if reverse geocoding fails
+                console.log("Reverse geocoding failed, using coordinates directly");
+              }
+              
+              // Get weather data
+              const wx = await getWeather(place.latitude, place.longitude, place.timezone);
+              if (!wx || !wx.current) {
+                throw new Error("Weather data invalid");
+              }
+              
+              renderCurrent(place, wx);
+              renderForecast(wx.daily);
+              if (typeof renderInsights === 'function') {
+                renderInsights(place, wx.daily);
+              }
+              saveRecent(place);
+              setLoading(false);
+            } catch (e) {
+              console.error("Auto location error:", e);
+              setError("Could not load weather for your location. Please try searching manually.");
+              setLoading(false);
+            }
+          },
+          (err) => {
+            console.log("Location permission:", err.message);
+            setLoading(false);
+            // User denied or error - they can still search manually
+          },
+          {
+            enableHighAccuracy: false,
+            timeout: 8000,
+            maximumAge: 300000 // 5 minutes
+          }
+        );
+      }, 100);
     }
   </script>
 </body>
-<!-- Ocean • Weather • Founder: Sinthujan Baskaran -->
 </html>
+
+
 
